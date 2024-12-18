@@ -61,6 +61,15 @@ app.post('/api/submit', upload.single('resume'), async (req, res) => {
   }
 });
 
+app.get('/api/forms', async (req, res) => {
+  try {
+    const forms = await FormData.find({});
+    res.status(200).json(forms);
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching data from MongoDB', error: err });
+  }
+});
+
 app.listen(5000, () => {
   console.log('Server is running on port 5000');
 });
