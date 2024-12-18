@@ -98,6 +98,29 @@ button[type="button"]:hover {
   font-weight: 400;
 }
 
+.form-list-container {
+  margin-top: 40px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ccc;
+}
+
+th {
+  background-color: #f4f4f4;
+}
+
 @media (max-width: 768px) {
   .form-container {
     padding: 30px;
