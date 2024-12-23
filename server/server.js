@@ -3,33 +3,40 @@ const mongoose = require('mongoose');
 const multer = require('multer');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 mongoose.connect('mongodb://localhost:27017/formData')
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.log('Failed to connect to MongoDB', err));
 
 const formDataSchema = new mongoose.Schema({
-  firstName: String,
-  lastName: String,
-  email: String,
-  contact: String,
-  gender: String,
-  subject: String,
-  url: String,
-  about: String,
-  resume: String,
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  email: { type: String, required: true },
+  contact: { type: String, required: true },
+  gender: { type: String, required: true },
+  subject: { type: String, required: true },
+  url: { type: String, required: true },
+  about: { type: String },
+  resume: { type: String },
 });
 
 const FormData = mongoose.model('FormData', formDataSchema);
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/');
+    const dir = 'uploads/';
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir);
+    }
+    cb(null, dir);
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));
@@ -55,7 +62,10 @@ app.post('/api/submit', upload.single('resume'), async (req, res) => {
 
   try {
     await newFormData.save();
-    res.status(200).json({ message: 'Form data submitted successfully!' });
+    res.status(200).json({
+      message: 'Form data submitted successfully!',
+      form: newFormData 
+    });
   } catch (err) {
     res.status(500).json({ message: 'Error saving data to MongoDB', error: err });
   }
