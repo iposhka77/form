@@ -3,6 +3,7 @@
 Установка
 
 cd form-main
+
 npm install
 
 
@@ -11,11 +12,15 @@ npm install
 
 
 В первом терминале запустите сервер:
+
+
 cd form-main/server
 node server
 
 
 Во втором терминале запустите клиентскую часть:
+
+
 cd form-main
 npm start
 
