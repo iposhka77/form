@@ -15,6 +15,7 @@ npm install
 
 
 cd form-main/server
+
 node server
 
 
@@ -22,6 +23,7 @@ node server
 
 
 cd form-main
+
 npm start
 
 Структура проекта
