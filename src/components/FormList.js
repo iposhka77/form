@@ -1,40 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 
-const FormList = () => {
-  const [forms, setForms] = useState([]);
-
-  useEffect(() => {
-    const fetchForms = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/api/forms');
-        setForms(response.data);
-      } catch (error) {
-        console.error('Error fetching forms:', error);
-      }
-    };
-
-    fetchForms();
-  }, []);
-
+const FormList = ({ forms }) => {
   return (
     <div className="form-list-container">
-      <h2>Submitted Forms</h2>
+      <h2>Отправленные анкеты</h2>
       {forms.length === 0 ? (
-        <p>No forms submitted yet.</p>
+        <p>Анкеты еще не отправлены.</p>
       ) : (
         <table>
           <thead>
             <tr>
-              <th>First Name</th>
-              <th>Last Name</th>
+              <th>Имя</th>
+              <th>Фамилия</th>
               <th>Email</th>
-              <th>Contact</th>
-              <th>Gender</th>
-              <th>Subject</th>
+              <th>Контакт</th>
+              <th>Пол</th>
+              <th>Предмет</th>
               <th>URL</th>
-              <th>About</th>
-              <th>Resume</th>
+              <th>О себе</th>
+              <th>Резюме</th>
             </tr>
           </thead>
           <tbody>
@@ -49,7 +33,14 @@ const FormList = () => {
                 <td>{form.url}</td>
                 <td>{form.about}</td>
                 <td>
-                  {form.resume && <a href={`http://localhost:5000/uploads/${form.resume}`} target="_blank" rel="noopener noreferrer">Download</a>}
+                  {form.resume && (
+                    <a 
+                      href={`http://localhost:5000/uploads/${form.resume}`} 
+                      target="_blank" 
+                      rel="noopener noreferrer">
+                      <button>Скачать</button>
+                    </a>
+                  )}
                 </td>
               </tr>
             ))}
@@ -61,4 +52,3 @@ const FormList = () => {
 };
 
 export default FormList;
-
