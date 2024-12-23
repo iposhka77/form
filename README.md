@@ -1,25 +1,31 @@
-cd form-main  `npm install`
+Этот проект использует React для фронтенда и MongoDB для хранения данных. Для корректной работы MongoDB должен быть установлен и запущен на порту 27017.
 
-запустить 2 терминала
+##Установка
 
-cd form-main `npm start`
+cd form-main
+npm install
 
-cd form-main\server `node server`
+Запуск
+Откройте два терминала:
 
-структура проекта 
-/REACT-FORM
+В первом терминале запустите сервер:
+cd form-main
+npm start
+Во втором терминале запустите клиентскую часть:
+cd form-main/server
+node server
+Структура проекта
+/FORM-MAIN
 │
-│── /node_modules          
-│         
+│── /node_modules
 │── /public    
-│
-│── /server          
+│── /server
 │    ├── server.js    
 │    ├── /uploads     
-│
 │── /src
-│   ├── /components
-    │   ├── FormComponent.js
-    │
-    │── App.css
-    │── App.js  
+│    ├── /components
+│    │   ├── FormComponent.js
+│    │   ├── FormList.js
+│    ├── App.css
+│    ├── App.js 
+
