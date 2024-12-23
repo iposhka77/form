@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 
-const FormComponent = () => {
+const FormComponent = ({ onFormSubmit }) => {
   const { register, handleSubmit, reset } = useForm();
   const [file, setFile] = useState(null);
-  const [submitted, setSubmitted] = useState(false); 
+  const [submitted, setSubmitted] = useState(false);
 
   const onSubmit = async (data) => {
     const formData = new FormData();
@@ -13,8 +13,8 @@ const FormComponent = () => {
     formData.append('lastName', data.lastName);
     formData.append('email', data.email);
     formData.append('contact', data.contact);
-    formData.append('gender', data.gender);
-    formData.append('subject', data.subject);
+    formData.append('gender', data.gender); 
+    formData.append('subject', data.subject); 
     formData.append('url', data.url);
     formData.append('about', data.about);
     formData.append('resume', file);
@@ -26,10 +26,11 @@ const FormComponent = () => {
         },
       });
       console.log(response.data);
-      setSubmitted(true); 
-      reset(); 
+      onFormSubmit(response.data.form); 
+      setSubmitted(true);
+      reset();
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.error('Ошибка при отправке формы:', error);
     }
   };
 
@@ -39,68 +40,65 @@ const FormComponent = () => {
 
   return (
     <div className="form-container">
-      <h2>Form in React</h2>
-      {submitted && <p>Форма успешно отправлена!</p>} {/* сообщение об успешной отправке */}
+      <h2>Форма в React</h2>
+      {submitted && <p>Форма успешно отправлена!</p>}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="form-group">
-          <label>First Name*</label>
+          <label>Имя*</label>
           <input type="text" {...register('firstName', { required: true })} />
         </div>
         <div className="form-group">
-          <label>Last Name*</label>
+          <label>Фамилия*</label>
           <input type="text" {...register('lastName', { required: true })} />
         </div>
         <div className="form-group">
-          <label>Enter Email*</label>
+          <label>Email*</label>
           <input type="email" {...register('email', { required: true })} />
         </div>
         <div className="form-group">
-          <label>Contact*</label>
+          <label>Контакт*</label>
           <input type="text" {...register('contact', { required: true })} />
         </div>
         <div className="form-group">
-          <label>Gender*</label>
+          <label>Пол*</label>
           <div className="gender-options">
             <label>
-              <input type="radio" {...register('gender', { required: true })} value="Male" /> Male
+              <input type="radio" {...register('gender', { required: true })} value="Мужчина" /> Мужчина
             </label>
             <label>
-              <input type="radio" {...register('gender', { required: true })} value="Female" /> Female
-            </label>
-            <label>
-              <input type="radio" {...register('gender', { required: true })} value="Other" /> Other
+              <input type="radio" {...register('gender', { required: true })} value="Женщина" /> Женщина
             </label>
           </div>
         </div>
         <div className="form-group">
-          <label>Your best Subject</label>
+          <label>Ваш лучший предмет</label>
           <select {...register('subject', { required: true })}>
-            <option value="Math">Math</option>
-            <option value="Science">Science</option>
-            <option value="History">History</option>
-            <option value="English">English</option>
-            <option value="Art">Art</option>
-            <option value="Music">Music</option>
-            <option value="Sports">Sports</option>
-            <option value="Literature">Literature</option>
-            <option value="Philosophy">Philosophy</option>
+            <option value="Математика">Математика</option>
+            <option value="Наука">Наука</option>
+            <option value="История">История</option>
+            <option value="Английский">Английский</option>
+            <option value="Искусство">Искусство</option>
+            <option value="Музыка">Музыка</option>
+            <option value="Спорт">Спорт</option>
+            <option value="Литература">Литература</option>
+            <option value="Философия">Философия</option>
           </select>
         </div>
         <div className="form-group">
-          <label>Upload Resume*</label>
+          <label>Загрузите резюме*</label>
           <input type="file" onChange={onFileChange} required />
         </div>
         <div className="form-group">
-          <label>Enter URL*</label>
+          <label>Введите URL*</label>
           <input type="url" {...register('url', { required: true })} />
         </div>
         <div className="form-group">
-          <label>About</label>
+          <label>О себе</label>
           <textarea {...register('about')} />
         </div>
         <div className="button-group">
-          <button type="button" onClick={() => reset()} className="reset-btn">Reset</button>
-          <button type="submit" className="submit-btn">Submit</button>
+          <button type="button" onClick={() => reset()} className="reset-btn">Сбросить</button>
+          <button type="submit" className="submit-btn">Отправить</button>
         </div>
       </form>
     </div>
